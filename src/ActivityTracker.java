@@ -13,7 +13,12 @@ public class ActivityTracker {
 
     public ArrayList<Activity> getActivities()
     {
-        return this.activities;
+        return activities;
+    }
+
+    public void addActivity(Activity a)
+    {
+        activities.add(a);
     }
 
 }
