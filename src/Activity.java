@@ -1,4 +1,15 @@
+import java.util.Arrays;
+
 public class Activity {
+
+    //Enum for intensity levels
+    enum intensityLevel{
+        VeryLight,
+        Light,
+        Moderate,
+        Vigorous,
+        VeryVigorous
+    }
 
     //Variables input by csv
     private String type;
@@ -9,7 +20,7 @@ public class Activity {
 
     //Variables calculated based on above
     private double kmPerHour;
-    private String intensityLevel;
+    private intensityLevel level;
     private double intensityValue;
     private double calsBurned;
 
@@ -25,8 +36,8 @@ public class Activity {
 
         //Calculated variables
         this.kmPerHour = kmPH(duration, distance);
-        this.intensityLevel = calcIntensity(type, this.kmPerHour);
-        this.intensityValue = calcIntValue(type, this.intensityLevel);
+        this.level = calcIntensity(type, this.kmPerHour);
+        this.intensityValue = calcIntValue(type, this.level);
         this.calsBurned = calcCalsBurned(duration, this.intensityValue);
     }
 
@@ -58,9 +69,9 @@ public class Activity {
     {
         return kmPerHour;
     }
-    public String getIntensityLevel()
+    public String getLevel()
     {
-        return intensityLevel;
+        return level.toString();
     }
     public double getIntensityValue()
     {
@@ -75,8 +86,8 @@ public class Activity {
     public void setType(String type)
     {
         this.type = type;
-        intensityLevel = calcIntensity(type, kmPerHour);
-        intensityValue = calcIntValue(type, intensityLevel);
+        level = calcIntensity(type, kmPerHour);
+        intensityValue = calcIntValue(type, level);
         calsBurned = calcCalsBurned(duration, intensityValue);
     }
     public void setDate(String date)
@@ -87,16 +98,16 @@ public class Activity {
     {
         this.duration = duration;
         kmPerHour = kmPH(duration, distance);
-        intensityLevel = calcIntensity(type, kmPerHour);
-        intensityValue = calcIntValue(type, intensityLevel);
+        level = calcIntensity(type, kmPerHour);
+        intensityValue = calcIntValue(type, level);
         calsBurned = calcCalsBurned(duration, intensityValue);
     }
     private void setDistance(double distance)
     {
         this.distance = distance;
         kmPerHour = kmPH(duration, distance);
-        intensityLevel = calcIntensity(type, kmPerHour);
-        intensityValue = calcIntValue(type, intensityLevel);
+        level = calcIntensity(type, kmPerHour);
+        intensityValue = calcIntValue(type, level);
         calsBurned = calcCalsBurned(duration, intensityValue);
     }
     private void setAvgHeartRate(int avgHeartRate)
@@ -104,7 +115,15 @@ public class Activity {
         this.avgHeartRate = avgHeartRate;
     }
 
-
+    //Override Object method
+    public String toString()
+    {
+        return("Type: "+type
+                +"\nDate: " +date
+                +"\nDuration: "+duration +"minutes"
+                +"\nDistance: "+distance+"km"
+                +"\nAverage Heart Rate: "+avgHeartRate+"bpm");
+    }
 
 
 
@@ -119,60 +138,60 @@ public class Activity {
     }
 
     //Determines which of the below methods to run based on activity type - Gets intensity label
-    private String calcIntensity(String type, double kmph)
+    private intensityLevel calcIntensity(String type, double kmph)
     {
         return switch (type) {
             case "Swimming" -> swimIntensity(kmph);
             case "Running" -> runIntensity(kmph);
             case "Cycling" -> bikeIntensity(kmph);
-            default -> "ERROR";
+            default -> null;
         };
     }
 
-    private String swimIntensity(double kmph)
+    private intensityLevel swimIntensity(double kmph)
     {
         if(kmph<1.25)
-            return "Very Light";
+            return intensityLevel.VeryLight;
         else if(kmph<2)
-            return "Light";
+            return  intensityLevel.Light;
         else if(kmph<2.75)
-            return "Moderate";
+            return  intensityLevel.Moderate;
         else if(kmph<3.5)
-            return "Vigorous";
+            return intensityLevel.Vigorous;
         else
-            return "Very Vigorous";
+            return intensityLevel.VeryVigorous;
     }
 
-    private String runIntensity(double kmph)
+    private intensityLevel runIntensity(double kmph)
     {
         if(kmph<4)
-            return "Very Light";
+            return intensityLevel.VeryLight;
         else if(kmph<8)
-            return "Light";
+            return intensityLevel.Light;
         else if(kmph<12)
-            return "Moderate";
+            return intensityLevel.Moderate;
         else if(kmph<16)
-            return "Vigorous";
+            return intensityLevel.Vigorous;
         else
-            return "Very Vigorous";
+            return intensityLevel.VeryVigorous;
     }
 
-    private String bikeIntensity(double kmph)
+    private intensityLevel bikeIntensity(double kmph)
     {
         if(kmph<8)
-            return "Very Light";
+            return intensityLevel.VeryLight;
         else if(kmph<17)
-            return "Light";
+            return intensityLevel.Light;
         else if(kmph<25)
-            return "Moderate";
+            return intensityLevel.Moderate;
         else if(kmph<33)
-            return "Vigorous";
+            return intensityLevel.Vigorous;
         else
-            return "Very Vigorous";
+            return intensityLevel.VeryVigorous;
     }
 
     //Determines which of the below methods to run based on activity type - Determines intensity value
-    private double calcIntValue(String type, String level)
+    private double calcIntValue(String type, intensityLevel level)
     {
         return switch (type) {
             case "Swimming" -> swimIntValue(level);
@@ -182,38 +201,38 @@ public class Activity {
         };
     }
 
-    private double swimIntValue(String level)
+    private double swimIntValue(intensityLevel level)
     {
         return switch (level) {
-            case "Very Light" -> 5;
-            case "Light" -> 6.3;
-            case "Moderate" -> 7.6;
-            case "Vigorous" -> 8.9;
-            case "Very Vigorous" -> 10.2;
+            case VeryLight -> 5;
+            case Light -> 6.3;
+            case Moderate -> 7.6;
+            case Vigorous -> 8.9;
+            case VeryVigorous -> 10.2;
             default -> 0;
         };
     }
 
-    private double runIntValue(String level)
+    private double runIntValue(intensityLevel level)
     {
         return switch (level) {
-            case "Very Light" -> 4.1;
-            case "Light" -> 7.2;
-            case "Moderate" -> 10;
-            case "Vigorous" -> 15.4;
-            case "Very Vigorous" -> 20.8;
+            case VeryLight -> 4.1;
+            case Light -> 7.2;
+            case Moderate -> 10;
+            case Vigorous -> 15.4;
+            case VeryVigorous -> 20.8;
             default -> 0;
         };
     }
 
-    private double bikeIntValue(String level)
+    private double bikeIntValue(intensityLevel level)
     {
         return switch (level) {
-            case "Very Light" -> 2;
-            case "Light" -> 5;
-            case "Moderate" -> 7;
-            case "Vigorous" -> 13;
-            case "Very Vigorous" -> 15;
+            case VeryLight -> 2;
+            case Light -> 5;
+            case Moderate -> 7;
+            case Vigorous -> 13;
+            case VeryVigorous -> 15;
             default -> 0;
         };
     }
