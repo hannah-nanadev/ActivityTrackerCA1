@@ -1,10 +1,11 @@
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Importer{
 
-    public ActivityTracker in(String fileName)
+    public static ActivityTracker in(String fileName)
     {
         //Code taken and adapted from https://github.com/logued/oop-csv-read-text-file/blob/master/src/main/java/org/example/Main.java
         try(Scanner sc = new Scanner(new File(fileName)))
@@ -19,7 +20,7 @@ public class Importer{
             while(sc.hasNextLine())
             {
                 String line = sc.nextLine();
-                String[] tokens = line.split(","); //Splits with , as delimiter
+                String[] tokens = line.split(", "); //Splits with , as delimiter
 
                 //Extracts strings, ints, doubles from tokens
                 String type = tokens[0];
