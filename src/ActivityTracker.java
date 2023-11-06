@@ -20,10 +20,20 @@ public class ActivityTracker {
         this.activities = new ArrayList<Activity>();
     }
 
-    //Getter for an activity
+    //Getters
     public ArrayList<Activity> getActivities()
     {
         return activities;
+    }
+
+    public Activity getActivity(int no)
+    {
+        return activities.get(no);
+    }
+
+    public int getLength()
+    {
+        return activities.size();
     }
 
     //Adds activity to list
