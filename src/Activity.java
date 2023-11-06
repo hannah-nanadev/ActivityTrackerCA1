@@ -121,8 +121,10 @@ public class Activity {
         return("Type: "+type
                 +"\nDate: " +date
                 +"\nDuration: "+duration +"minutes"
-                +"\nDistance: "+distance+"km"
-                +"\nAverage Heart Rate: "+avgHeartRate+"bpm");
+                +"\nDistance: "+distance+"km (" + kmPerHour + " kmph)"
+                +"\nAverage Heart Rate: "+avgHeartRate+"bpm"
+                +"\nIntensity: " + level + " (" + intensityValue + ")"
+                +"\nCalories burned: " + calsBurned);
     }
 
 
