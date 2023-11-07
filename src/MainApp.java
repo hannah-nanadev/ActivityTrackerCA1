@@ -1,6 +1,7 @@
-import java.io.*;
+import java.util.Collection;
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Collections;
 
 public class MainApp {
     public static void main(String[] args){
@@ -36,7 +37,7 @@ public class MainApp {
                     viewMenu(tracker);
                     break;
                 case 2:
-                    System.out.println("Currently unimplemented.");
+                    sortMenu(tracker);
                     break;
                 case 3:
                     System.out.println("Thank you!");
@@ -62,8 +63,52 @@ public class MainApp {
             }
             else
             {
+                selected--;
                 System.out.println(tracker.getActivity(selected).toString());
             }
         }
+    }
+
+    public static void sortMenu(ActivityTracker tracker)
+    {
+        System.out.println("Sort activities how?"
+        +"\n1: By activity type"
+        +"\n2: By duration"
+        +"\n3: By distance"
+        +"\n4: By intensity level"
+        +"\n5: By calories burned"
+        +"\n6: Back");
+
+        Scanner sc = new Scanner(System.in);
+        int selection = sc.nextInt();
+
+        switch(selection)
+        {
+            case 1: //By activity type
+                Comparator<Activity> compAct = new ActivityCompare();
+                Collections.sort(tracker.getActivities(), compAct);
+                break;
+            case 2: //By duration
+                Comparator<Activity> compDur = new DurationCompare();
+                Collections.sort(tracker.getActivities(), compDur);
+                break;
+            case 3: //By distance
+                Comparator<Activity> compDis = new DistanceCompare();
+                Collections.sort(tracker.getActivities(), compDis);
+                break;
+            case 4: //By intensity level
+                Comparator<Activity> compInt = new LevelCompare();
+                Collections.sort(tracker.getActivities(), compInt);
+                break;
+            case 5:
+                Comparator<Activity> compCal = new CalorieCompare();
+                Collections.sort(tracker.getActivities(), compCal);
+                break;
+        }
+        if(selection<6&&selection>0)
+        {
+            System.out.println("Sorted!");
+        }
+
     }
 }
