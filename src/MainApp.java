@@ -1,4 +1,3 @@
-import java.util.Collection;
 import java.util.Scanner;
 import java.util.Comparator;
 import java.util.Collections;
@@ -75,9 +74,8 @@ public class MainApp {
         +"\n1: By activity type"
         +"\n2: By duration"
         +"\n3: By distance"
-        +"\n4: By intensity level"
-        +"\n5: By calories burned"
-        +"\n6: Back");
+        +"\n4: By calories burned"
+        +"\n5: Back");
 
         Scanner sc = new Scanner(System.in);
         int selection = sc.nextInt();
@@ -96,18 +94,25 @@ public class MainApp {
                 Comparator<Activity> compDis = new DistanceCompare();
                 Collections.sort(tracker.getActivities(), compDis);
                 break;
-            case 4: //By intensity level
-                Comparator<Activity> compInt = new LevelCompare();
-                Collections.sort(tracker.getActivities(), compInt);
-                break;
-            case 5:
+            case 4:
                 Comparator<Activity> compCal = new CalorieCompare();
                 Collections.sort(tracker.getActivities(), compCal);
                 break;
         }
-        if(selection<6&&selection>0)
+        if(selection<5&&selection>0)
         {
+            System.out.println("Ascending or descending?" +
+                    "\n1: Ascending" +
+                    "\n2: Descending");
+            int sel2 = sc.nextInt();
+
+            if(sel2==2)
+            {
+                Collections.reverse(tracker.getActivities());
+            }
+
             System.out.println("Sorted!");
+
         }
 
     }
