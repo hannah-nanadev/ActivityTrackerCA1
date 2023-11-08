@@ -3,7 +3,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 public class MainApp {
-    public static void main(String[] args){
+    public static void main(String[] args){ //Main menu
         System.out.println("Welcome to Activity Tracker!");
         ActivityTracker tracker = null;
         while(tracker==null)
@@ -26,7 +26,8 @@ public class MainApp {
             System.out.println("What would you like to do?" +
                     "\n1: View Activity" +
                     "\n2: Sort Activities" +
-                    "\n3: Exit");
+                    "\n3: Search" +
+                    "\n4: Exit");
             Scanner sc2 = new Scanner(System.in);
             selection = sc2.nextInt();
 
@@ -39,6 +40,9 @@ public class MainApp {
                     sortMenu(tracker);
                     break;
                 case 3:
+                    searchMenu(tracker);
+                    break;
+                case 4:
                     System.out.println("Thank you!");
                     running = false;
             }
@@ -116,4 +120,26 @@ public class MainApp {
         }
 
     }
+
+    public static void searchMenu(ActivityTracker tracker)
+    {
+        System.out.println("Please enter the type of activity you're looking for.");
+        Scanner sc = new Scanner(System.in);
+        String selected = sc.nextLine();
+
+        Activity key = new Activity(selected, "", 0, 0, 0);
+        Comparator<Activity> compAct = new ActivityCompare();
+
+        int index = Collections.binarySearch(tracker.getActivities(), key, compAct);
+
+        if(index>=0)
+        {
+            System.out.println(tracker.getActivity(index).toString());
+            System.out.println("Found at index " + (index+1));
+        }
+        else {
+            System.out.println("Not found.");
+        }
+    }
+
 }
