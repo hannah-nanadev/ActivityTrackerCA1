@@ -42,4 +42,30 @@ public class ActivityTracker {
         activities.add(a);
     }
 
+    //Functionality
+    public double avgDistance()
+    {
+        double avg = 0;
+
+        for(int i = 0; i<activities.size(); i++)
+        {
+            avg = avg+activities.get(i).getDistance();
+        }
+
+        return avg/activities.size();
+
+    }
+
+    public double avgCalsBurned()
+    {
+        double avg = 0;
+
+        for(int i = 0; i<activities.size(); i++)
+        {
+            avg = avg+activities.get(i).getCalsBurned();
+        }
+
+        return avg/activities.size();
+    }
+
 }

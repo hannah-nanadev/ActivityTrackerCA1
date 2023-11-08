@@ -27,7 +27,8 @@ public class MainApp {
                     "\n1: View Activity" +
                     "\n2: Sort Activities" +
                     "\n3: Search" +
-                    "\n4: Exit");
+                    "\n4: Get averages" +
+                    "\n5: Exit");
             Scanner sc2 = new Scanner(System.in);
             selection = sc2.nextInt();
 
@@ -43,6 +44,9 @@ public class MainApp {
                     searchMenu(tracker);
                     break;
                 case 4:
+                    getAverages(tracker);
+                    break;
+                case 5:
                     System.out.println("Thank you!");
                     running = false;
             }
@@ -140,6 +144,12 @@ public class MainApp {
         else {
             System.out.println("Not found.");
         }
+    }
+
+    public static void getAverages(ActivityTracker tracker)
+    {
+        System.out.println("Average distance per activity: " + tracker.avgDistance()
+        + "\nAverage calories burned per activity: " + tracker.avgCalsBurned());
     }
 
 }
