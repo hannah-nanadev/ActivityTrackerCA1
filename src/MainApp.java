@@ -3,7 +3,7 @@ import java.util.Comparator;
 import java.util.Collections;
 
 public class MainApp {
-    public static void main(String[] args){ //Main menu
+    public static void main(String[] args){ //Main menu + importer
         System.out.println("Welcome to Activity Tracker!");
         ActivityTracker tracker = null;
         while(tracker==null)
@@ -28,7 +28,8 @@ public class MainApp {
                     "\n2: Sort Activities" +
                     "\n3: Search" +
                     "\n4: Get averages" +
-                    "\n5: Exit");
+                    "\n5: View all of a specific activity" +
+                    "\n6: Exit");
             Scanner sc2 = new Scanner(System.in);
             selection = sc2.nextInt();
 
@@ -47,6 +48,9 @@ public class MainApp {
                     getAverages(tracker);
                     break;
                 case 5:
+                    viewAllOf(tracker);
+                    break;
+                case 6:
                     System.out.println("Thank you!");
                     running = false;
             }
@@ -54,7 +58,7 @@ public class MainApp {
         }
     }
 
-    public static void viewMenu(ActivityTracker tracker)
+    public static void viewMenu(ActivityTracker tracker) //View Activity
     {
         boolean running = true;
         while(running)
@@ -76,7 +80,7 @@ public class MainApp {
         }
     }
 
-    public static void sortMenu(ActivityTracker tracker)
+    public static void sortMenu(ActivityTracker tracker) //Sort Activities
     {
         System.out.println("Sort activities how?"
         +"\n1: By activity type"
@@ -125,7 +129,7 @@ public class MainApp {
 
     }
 
-    public static void searchMenu(ActivityTracker tracker)
+    public static void searchMenu(ActivityTracker tracker) //Search
     {
         System.out.println("Please enter the type of activity you're looking for.");
         Scanner sc = new Scanner(System.in);
@@ -146,10 +150,37 @@ public class MainApp {
         }
     }
 
-    public static void getAverages(ActivityTracker tracker)
+    public static void getAverages(ActivityTracker tracker) //Get Averages
     {
         System.out.println("Average distance per activity: " + tracker.avgDistance()
         + "\nAverage calories burned per activity: " + tracker.avgCalsBurned());
+    }
+
+    public static void viewAllOf(ActivityTracker tracker) //View all of a specific activity
+    {
+        boolean valid = false;
+
+        while(!valid)
+        {
+            System.out.println("What type of activity would you like to search for?" +
+                    "\n(Type -1 to cancel.)");
+            Scanner sc = new Scanner(System.in);
+            String selection = sc.nextLine();
+
+            if(selection.equals("-1"))
+            {
+                break;
+            }
+            valid = true;
+            for(int i = 0; i<tracker.getLength(); i++)
+            {
+                if(tracker.getActivity(i).getType().equals(selection))
+                {
+                    System.out.println(tracker.getActivity(i).toString());
+                }
+            }
+
+        }
     }
 
 }
